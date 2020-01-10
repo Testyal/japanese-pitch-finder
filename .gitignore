@@ -1,5 +1,5 @@
 .stack-work/
-japanese-tex-generator.cabal
+japanese-pitch-finder.cabal
 *.aux
 *.fdb_latexmk
 *.fls

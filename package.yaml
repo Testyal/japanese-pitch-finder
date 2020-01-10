@@ -1,6 +1,6 @@
-name:                japanese-tex-generator
+name:                japanese-pitch-finder
 version:             0.1.0.0
-github:              "githubuser/japanese-tex-generator"
+github:              "Testyal/japanese-pitch-finder"
 license:             BSD3
 author:              "Author name here"
 maintainer:          "example@example.com"
@@ -30,7 +30,7 @@ library:
   source-dirs: src
 
 executables:
-  japanese-tex-generator-exe:
+  japanese-pitch-finder:
     main:                Main.hs
     source-dirs:         app
     ghc-options:
@@ -38,9 +38,9 @@ executables:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - japanese-tex-generator
+    - japanese-pitch-finder
 
-  japanese-tex-generator-serializer:
+  japanese-pitch-finder-serializer:
     main: Serialize.hs
     source-dirs: app
     ghc-options:
@@ -49,10 +49,10 @@ executables:
     - -with-rtsopts=-N
     - -main-is Serialize
     dependencies:
-    - japanese-tex-generator
+    - japanese-pitch-finder
 
 tests:
-  japanese-tex-generator-test:
+  japanese-pitch-finder-test:
     main:                Spec.hs
     source-dirs:         test
     ghc-options:
@@ -60,11 +60,11 @@ tests:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - japanese-tex-generator
+    - japanese-pitch-finder
     - hspec
 
 benchmarks:
-  japanese-tex-generator-benchmark:
+  japanese-pitch-finder-benchmark:
     main: Bench.hs
     source-dirs: benchmark
     ghc-options:
@@ -72,5 +72,5 @@ benchmarks:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - japanese-tex-generator
+    - japanese-pitch-finder
     - criterion
