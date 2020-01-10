@@ -1,0 +1,11 @@
+cradle:
+  stack:
+    - path: "./src"
+      component: "japanese-tex-generator:lib"
+    - path: "./test"
+      component: "japanese-tex-generator:japanese-tex-generator-test"
+    - path: "./app"
+      component: "japanese-tex-generator:japanese-tex-generator-exe"
+    - path: "./benchmark"
+      component: "japanese-tex-generator:japanese-tex-generator-benchmark"
+      
