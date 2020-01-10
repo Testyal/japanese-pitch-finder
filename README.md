@@ -15,5 +15,5 @@ stack exec -- japanese-pitch-finder [-o OUTPUT_FILE] QUERY
 `-o OUTPUT_FILE` \
 Appends the code `\dictentry{QUERY}{}{OUTPUT}{}{}` to `OUTPUT_FILE`, where `OUTPUT` is the reading of `QUERY` with pitch accent marks added. See `template.tex` for an example of how to define the `\dictentry` command.
 
-# Attributions 
+## Attributions 
 This work uses a modified version (found in `data/NewWaDokuDa.tsv`) of the [WaDokuJT data](https://github.com/WaDoku/WaDokuJT-Data) by Ulrich Apel & Wadoku e.V, used under [CC BY-SA 3.0](http://creativecommons.org/licenses/by-sa/3.0/). 
