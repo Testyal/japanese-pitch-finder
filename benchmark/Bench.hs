@@ -1,7 +1,7 @@
 import qualified Data.ByteString.Lazy as BL
 import Criterion.Main
-import Match
-import Search 
+import CityRecyclingAndCodeWasteCenter.MatchOld
+import CityRecyclingAndCodeWasteCenter.SearchOld
 
 main :: IO ()
 main = do

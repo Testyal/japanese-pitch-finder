@@ -1,4 +1,4 @@
-module StringUtilities where
+module CityRecyclingAndCodeWasteCenter.StringUtilitiesOld where
 
 splitWhen :: (a -> Bool) -> [a] -> [[a]]
 splitWhen _ [] = []

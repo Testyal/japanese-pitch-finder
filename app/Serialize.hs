@@ -6,8 +6,8 @@ import qualified Data.Vector as V
 import qualified Data.ByteString.Lazy as BL
 import Data.Char
 import Data.Csv
-import Expand
-import Search
+import CityRecyclingAndCodeWasteCenter.ExpandOld
+import CityRecyclingAndCodeWasteCenter.SearchOld
 
 main :: IO ()
 main = do

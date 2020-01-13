@@ -1,11 +1,11 @@
 cradle:
   stack:
     - path: "./src"
-      component: "japanese-tex-generator:lib"
+      component: "japanese-pitch-finder:lib"
     - path: "./test"
-      component: "japanese-tex-generator:japanese-tex-generator-test"
+      component: "japanese-pitch-finder:japanese-pitch-finder-test"
     - path: "./app"
-      component: "japanese-tex-generator:japanese-tex-generator-exe"
+      component: "japanese-pitch-finder:japanese-pitch-finder"
     - path: "./benchmark"
-      component: "japanese-tex-generator:japanese-tex-generator-benchmark"
+      component: "japanese-pitch-finder:japanese-pitch-finder-benchmark"
       

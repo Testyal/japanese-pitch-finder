@@ -1,7 +1,7 @@
-module TeXGenerator where
+module CityRecyclingAndCodeWasteCenter.TeXGeneratorOld where
 
-import Downstep
-import Search
+import CityRecyclingAndCodeWasteCenter.DownstepOld
+import CityRecyclingAndCodeWasteCenter.SearchOld
 
 generateTeXFromPronunciation :: [Pronunciation] -> String 
 generateTeXFromPronunciation [] = ""

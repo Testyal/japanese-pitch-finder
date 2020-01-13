@@ -1,8 +1,8 @@
-import Expand
+import CityRecyclingAndCodeWasteCenter.ExpandOld
 import qualified Data.Vector as V
-import Match
-import Search
-import StringUtilities
+import CityRecyclingAndCodeWasteCenter.MatchOld
+import CityRecyclingAndCodeWasteCenter.SearchOld
+import CityRecyclingAndCodeWasteCenter.StringUtilitiesOld
 import Test.Hspec
 import qualified Data.ByteString.Lazy as BL
 

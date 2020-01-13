@@ -1,7 +1,7 @@
 -- TODO: Split off a Parser module to absorb the effects of parseJapaneseEntry
-module Match where
+module CityRecyclingAndCodeWasteCenter.MatchOld where
 
-import StringUtilities
+import CityRecyclingAndCodeWasteCenter.StringUtilitiesOld
 
 -- TODO: Implement something a lot, lot faster. Potentially could be improved a lot by reserializing the data so we can perform a search algorithm
 match :: String -> String -> Bool

@@ -1,13 +1,13 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 -- TODO: Split off a Dictionary module
-module Search where
+module CityRecyclingAndCodeWasteCenter.SearchOld where
 
 import qualified Data.ByteString.Lazy as BL
 import Data.Char
 import Data.Csv
 import qualified Data.Vector as V
-import Match
+import CityRecyclingAndCodeWasteCenter.MatchOld
 import Text.Read
 
 tsvDecodeOptions :: DecodeOptions

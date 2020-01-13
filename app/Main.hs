@@ -1,90 +1,77 @@
+
 module Main where
 
-import qualified Data.Vector as V
-import qualified Data.ByteString.Lazy as BL
+import Dictionary.Csv
+import Dictionary.Output
+import Dictionary.Search
+import Dictionary.Types
+import Latex
 import System.Environment
-import System.Exit
-import Search
-import Downstep
-import TeXGenerator
 
+-- Filter entries in WaDoku ---------------------------------------------------------------------------------------
+
+{-| Path to WaDoku data. -}
+wadoku :: FilePath 
+wadoku = "data/NewWaDokuDa.tsv"
+
+{-| Filters the WaDoku dictionary using a given query. -}
+filterWadoku :: String -> IO (Either String Dictionary)
+filterWadoku query = do 
+    dict <- readDictionaryFromFilepath wadoku
+    return $ (`filterEntries` query) <$> dict
+
+-- Non-exporting program ------------------------------------------------------------------------------------------
+
+{-| Given a query, runs the program which filters WaDoku and prints the result. -}
+runWithoutExport :: String -> IO ()
+runWithoutExport query = do
+    putStrLn "Searching WaDoku..."
+    result <- filterWadoku query
+    case result of 
+        Left err -> putStrLn err
+        Right dict -> putDictionary dict
+    putStrLn "Done."
+
+-- Exporting program ----------------------------------------------------------------------------------------------
+
+{-| Has the user choose a dictionary entry in a dictionary by entering a number. -}
+selectDictionaryEntry :: Dictionary -> IO (Either String DictionaryEntry)
+selectDictionaryEntry dict = case length dict of 
+    0 -> return $ Left "No entries in dictionary."
+    1 -> return $ Right (dict ! 0) 
+    _ -> do 
+        putStrLn "Multiple options available, type a number to select:"
+        selection <- getLine >>= readIO :: IO Int
+        return $ Right (dict ! selection)
+
+{-| Given a query and a LaTeX file to export to, runs the program which filters WaDoku, prints the result, asks 
+the user which dictionary entry to export, generates LaTeX code for that entry and appends it to the file -}
+{- TODO: It may be better to learn how to use monad transformers to get this creeping indentation out. -}
+runWithExport :: FilePath -> String -> IO ()
+runWithExport export query = do
+    putStrLn "Searching WaDoku..."
+    filter <- filterWadoku query
+    case filter of 
+        Left err -> putStrLn err 
+        Right dict -> do
+            putDictionary dict
+            selection <- selectDictionaryEntry dict
+            case selection of 
+                Left err -> putStrLn err 
+                Right entry -> do
+                    putStrLn $ "Appending generated LaTeX code to " ++ export ++ "..."
+                    appendDictionaryEntryToLatexFile export entry
+                    putStrLn "Done."
+
+-- Main -----------------------------------------------------------------------------------------------------------
+
+{-| Parses the arguments passed to the program, showing a proper usage message if invalid arguments are passed. -}
 parseArgs :: [String] -> IO ()
-parseArgs [query] = mainNoOutputNew query
-parseArgs ["-o", file, query] = mainWithOutputNew query file
-parseArgs _ = do
-    putStrLn "usage: stack run WORD_TO_FIND [-o OUTPUT_FILE]" 
-    exitFailure >>= putStrLn 
+parseArgs [query] = runWithoutExport query
+parseArgs ["-o", export, query] = runWithExport export query
+parseArgs _ = putStrLn "Usage: japanese-pitch-finder [-o LATEX_FILE] QUERY"
 
 main :: IO ()
 main = getArgs >>= parseArgs
 
--- TODO: Remove creeping indentation     
-mainNoOutput :: String -> IO ()
-mainNoOutput query = do
-    wadokuDictionary <- BL.readFile "data/WaDokuDa.tsv"
-    case findJapaneseEntryInCsv wadokuDictionary query of 
-        Left err -> putStrLn err
-        Right entry -> do 
-            putDictionaryEntry entry
-            case applyDownstepToDictionaryEntry entry of 
-                Left err -> putStrLn err 
-                Right pronunciation -> do
-                    putPronunciation pronunciation
-                    putStrLn $ generateTeXDictionaryEntry query pronunciation
-
-mainNoOutputNew :: String -> IO ()
-mainNoOutputNew query = do 
-    wadoku <- BL.readFile "data/NewWaDokuDa.tsv"
-    case convertCsvToDictionary wadoku of
-        Left err -> putStrLn err
-        Right dict -> putDictionaryWithPronunciation $ filterJapaneseEntries dict query
-
--- TODO: Remove creeping indentation
-mainWithOutput :: String -> FilePath -> IO ()
-mainWithOutput query file = do
-    wadokuDictionary <- BL.readFile "data/WaDokuDa.tsv"
-    case findJapaneseEntryInCsv wadokuDictionary query of 
-        Left err -> putStrLn err
-        Right entry -> do 
-            putDictionaryEntry entry
-            case applyDownstepToDictionaryEntry entry of 
-                Left err -> putStrLn err 
-                Right pronunciation -> do
-                    putPronunciation pronunciation
-                    putStrLn $ generateTeXDictionaryEntry query pronunciation
-                    appendFile file $ "\n\n" ++ generateTeXDictionaryEntry query pronunciation
-
--- FIXME: This is disgusting
-mainWithOutputNew :: String -> FilePath -> IO ()
-mainWithOutputNew query file = do 
-    putStrLn "Searching for entries..."
-    wadoku <- BL.readFile "data/NewWaDokuDa.tsv"
-    case convertCsvToDictionary wadoku of 
-        Left err -> putStrLn err 
-        Right dict -> do
-            putDictionaryWithPronunciation filteredDict
-            case V.length filteredDict of 
-                0 -> return ()
-                1 -> case applyDownstepToDictionaryEntry (filteredDict V.! 0) of 
-                    Left err -> putStrLn err 
-                    Right pronunciation -> do
-                        putStrLn $ "Appending " ++ texEntry ++ "　to " ++ file ++ "..."
-                        appendFile file $ "\n\n" ++ texEntry
-                        putStrLn "Done."
-                        where
-                            texEntry = generateTeXDictionaryEntry query pronunciation
-                _ -> do 
-                    putStrLn "Multiple options encountered. Type a number to select: " 
-                    selection <- getLine >>= readIO :: IO Int
-                    case applyDownstepToDictionaryEntry (filteredDict V.! (selection - 1)) of 
-                        Left err -> putStrLn err 
-                        Right pronunciation -> do
-                            putStrLn $ "Appending " ++ texEntry' ++ " to " ++ file ++ "..."
-                            appendFile file $ "\n\n" ++ texEntry'
-                            putStrLn "Done."
-                            where
-                                texEntry' = generateTeXDictionaryEntry query pronunciation
-            where 
-                filteredDict = filterJapaneseEntries dict query
-
-
+-------------------------------------------------------------------------------------------------------------------

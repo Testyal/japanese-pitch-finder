@@ -1,9 +1,9 @@
-module Expand where
+module CityRecyclingAndCodeWasteCenter.ExpandOld where
 
 import Control.Monad
 import qualified Data.Vector as V
-import Match
-import Search
+import CityRecyclingAndCodeWasteCenter.MatchOld
+import CityRecyclingAndCodeWasteCenter.SearchOld
 
 data BizarroDictionaryEntry = BizarroDictionaryEntry {
     japanese :: [String],
