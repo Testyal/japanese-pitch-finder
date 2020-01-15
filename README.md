@@ -1,5 +1,5 @@
 # Japanese Pitch Finder
-Japanese Pitch Finder is a utility to search for Japanese words and display their reading with pitch accent marks added. Optionally, it also has the capability to append a LaTeX command to a given document.
+Japanese Pitch Finder is a utility to search for Japanese words and display their reading with pitch accent marks added. Optionally, it also has the capability to append a provided LaTeX command to a given document.
 
 ## Installing
 You should have [Stack](https://docs.haskellstack.org/en/stable/README/) installed. Clone this repository into your favorite directory and run
