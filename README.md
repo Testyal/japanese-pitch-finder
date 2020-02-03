@@ -4,13 +4,15 @@ Japanese Pitch Finder is a utility to search for Japanese words and display thei
 ## Installing
 You should have [Stack](https://docs.haskellstack.org/en/stable/README/) installed. Clone this repository into your favorite directory and run
 ```bash
-stack build
+stack install
 ```
 
 ## Usage
+In the directory you cloned this repository into, run
 ```bash
 stack exec -- japanese-pitch-finder [-o OUTPUT_FILE] QUERY
 ```
+Alternatively, the command `stack install` will copy the binary `japanese-pitch-finder` to a directory you can add to your `PATH`. On macOS, this should be `/Users/$USER/.local/bin`.
 
 `-o OUTPUT_FILE` \
 Appends the code `\dictentry{QUERY}{}{OUTPUT}{}{}` to `OUTPUT_FILE`, where `OUTPUT` is the reading of `QUERY` with pitch accent marks added. See `template.tex` for an example of how to define the `\dictentry` command.
